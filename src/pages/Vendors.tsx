@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import MobileNav from "@/components/MobileNav";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -86,17 +87,17 @@ const Vendors = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col pb-20 md:pb-0">
       <Navbar />
       <main className="flex-1">
         {/* Header */}
-        <section className="bg-gradient-to-br from-primary/10 via-background to-secondary/10 py-16">
+        <section className="bg-gradient-to-br from-primary/10 via-background to-secondary/10 py-8 md:py-16">
           <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto text-center space-y-4">
-              <h1 className="text-4xl md:text-5xl font-bold">
+            <div className="max-w-3xl mx-auto text-center space-y-3 md:space-y-4">
+              <h1 className="text-3xl md:text-5xl font-bold">
                 Discover Local <span className="text-primary">Vendors</span>
               </h1>
-              <p className="text-lg text-muted-foreground">
+              <p className="text-base md:text-lg text-muted-foreground">
                 Browse through 100+ verified kitchens and tiffin services in your area
               </p>
             </div>
@@ -104,40 +105,40 @@ const Vendors = () => {
         </section>
 
         {/* Filters & Search */}
-        <section className="py-8 border-b border-border">
+        <section className="py-4 md:py-6 border-b border-border sticky top-14 bg-background z-40">
           <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex gap-2 md:gap-4">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                 <Input
-                  placeholder="Search vendors, cuisines..."
-                  className="pl-10"
+                  placeholder="Search vendors..."
+                  className="pl-9 h-10 md:h-11 rounded-full"
                 />
               </div>
-              <Button variant="outline" className="md:w-auto">
+              <Button variant="outline" size="icon" className="rounded-full h-10 w-10 md:h-11 md:w-auto md:px-4">
                 <SlidersHorizontal className="h-4 w-4" />
-                Filters
+                <span className="hidden md:inline ml-2">Filters</span>
               </Button>
             </div>
           </div>
         </section>
 
         {/* Vendor Grid */}
-        <section className="py-12">
+        <section className="py-6 md:py-12">
           <div className="container mx-auto px-4">
-            <div className="mb-6 flex items-center justify-between">
-              <p className="text-muted-foreground">
-                Showing {allVendors.length} vendors
+            <div className="mb-4 md:mb-6 flex items-center justify-between">
+              <p className="text-sm md:text-base text-muted-foreground">
+                {allVendors.length} vendors near you
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {allVendors.map((vendor) => (
                 <Card
                   key={vendor.id}
-                  className="group hover:shadow-elevated transition-all duration-300 overflow-hidden border-2 hover:border-primary/20"
+                  className="group hover:shadow-card transition-all duration-300 overflow-hidden border hover:border-primary/20 rounded-2xl"
                 >
-                  <div className="relative h-48 overflow-hidden">
+                  <div className="relative h-40 md:h-48 overflow-hidden">
                     <img
                       src={vendor.image}
                       alt={vendor.name}
@@ -198,7 +199,8 @@ const Vendors = () => {
           </div>
         </section>
       </main>
-      <Footer />
+      <MobileNav />
+      <Footer className="hidden md:block" />
     </div>
   );
 };

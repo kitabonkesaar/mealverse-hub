@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import MobileNav from "@/components/MobileNav";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Target, Users, Award, Heart, TrendingUp, Shield } from "lucide-react";
@@ -35,7 +36,7 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col pb-20 md:pb-0">
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
@@ -164,7 +165,8 @@ const About = () => {
           </div>
         </section>
       </main>
-      <Footer />
+      <MobileNav />
+      <Footer className="hidden md:block" />
     </div>
   );
 };

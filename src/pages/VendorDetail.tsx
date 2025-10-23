@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
+import MobileNav from "@/components/MobileNav";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Star, Clock, MapPin, CheckCircle2, Phone, Mail } from "lucide-react";
+import { Star, Clock, MapPin, CheckCircle2, Phone, Mail, ArrowLeft, Heart, Share2 } from "lucide-react";
 import vendor1 from "@/assets/vendor-1.jpg";
 
 const VendorDetail = () => {
@@ -39,26 +40,30 @@ const VendorDetail = () => {
 
   const subscriptionPlans = [
     {
-      name: "Daily Lunch",
-      duration: "Per Day",
-      price: 99,
-      meals: ["1 Dal", "1 Sabzi", "4 Rotis", "Rice", "Salad"],
+      name: "Trial Plan",
+      duration: "3 Days",
+      price: 279,
+      originalPrice: 297,
+      pricePerDay: 93,
+      meals: ["Daily Lunch", "1 Dal, 1 Sabzi, 4 Rotis", "Rice & Salad"],
       popular: false,
     },
     {
-      name: "Weekly Plan",
-      duration: "7 Days",
-      price: 649,
-      originalPrice: 693,
-      meals: ["Daily Lunch", "Free delivery", "Flexible days"],
+      name: "Popular Choice",
+      duration: "15 Days",
+      price: 1349,
+      originalPrice: 1485,
+      pricePerDay: 90,
+      meals: ["Daily Lunch", "Free delivery", "Flexible skip days", "Priority support"],
       popular: true,
     },
     {
-      name: "Monthly Plan",
+      name: "Best Value",
       duration: "30 Days",
       price: 2499,
       originalPrice: 2970,
-      meals: ["Daily Lunch", "Priority delivery", "Cancel anytime", "Special discounts"],
+      pricePerDay: 83,
+      meals: ["Daily Lunch", "Priority delivery", "Cancel anytime", "Special discounts", "Loyalty rewards"],
       popular: false,
     },
   ];
@@ -85,24 +90,52 @@ const VendorDetail = () => {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col pb-20 md:pb-0">
       <Navbar />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative h-[300px] md:h-[400px]">
+        <section className="relative h-[280px] md:h-[400px]">
           <img
             src={vendor.image}
             alt={vendor.name}
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+          
+          {/* Mobile Header Actions */}
+          <div className="absolute top-4 left-0 right-0 px-4 flex items-center justify-between md:hidden">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="bg-background/80 backdrop-blur-sm hover:bg-background"
+              onClick={() => window.history.back()}
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+            <div className="flex gap-2">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="bg-background/80 backdrop-blur-sm hover:bg-background"
+              >
+                <Heart className="h-5 w-5" />
+              </Button>
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="bg-background/80 backdrop-blur-sm hover:bg-background"
+              >
+                <Share2 className="h-5 w-5" />
+              </Button>
+            </div>
+          </div>
         </section>
 
         {/* Vendor Info */}
-        <section className="relative -mt-20 z-10">
+        <section className="relative -mt-16 z-10">
           <div className="container mx-auto px-4">
-            <Card className="border-2">
-              <CardContent className="p-6">
+            <Card className="border-2 rounded-3xl md:rounded-2xl shadow-elevated">
+              <CardContent className="p-4 md:p-6">
                 <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
                   <div className="flex-1 space-y-4">
                     <div>
@@ -148,7 +181,7 @@ const VendorDetail = () => {
                     </div>
                   </div>
 
-                  <div className="lg:w-auto">
+                  <div className="lg:w-auto hidden md:block">
                     <Button variant="hero" size="lg" className="w-full lg:w-auto">
                       Start Subscription
                     </Button>
@@ -160,65 +193,73 @@ const VendorDetail = () => {
         </section>
 
         {/* Tabs Section */}
-        <section className="py-12">
+        <section className="py-6 md:py-12">
           <div className="container mx-auto px-4">
-            <Tabs defaultValue="plans" className="space-y-8">
-              <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:inline-grid">
-                <TabsTrigger value="plans">Subscription Plans</TabsTrigger>
-                <TabsTrigger value="menu">Menu</TabsTrigger>
-                <TabsTrigger value="reviews">Reviews</TabsTrigger>
+            <Tabs defaultValue="plans" className="space-y-6 md:space-y-8">
+              <TabsList className="grid w-full grid-cols-3 lg:w-auto lg:inline-grid h-auto p-1 bg-muted/50 rounded-2xl">
+                <TabsTrigger value="plans" className="rounded-xl text-xs md:text-sm">Plans</TabsTrigger>
+                <TabsTrigger value="menu" className="rounded-xl text-xs md:text-sm">Menu</TabsTrigger>
+                <TabsTrigger value="reviews" className="rounded-xl text-xs md:text-sm">Reviews</TabsTrigger>
               </TabsList>
 
-              <TabsContent value="plans" className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <TabsContent value="plans" className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   {subscriptionPlans.map((plan, index) => (
                     <Card
                       key={index}
-                      className={`relative overflow-hidden ${
-                        plan.popular ? "border-2 border-primary shadow-elevated" : ""
+                      className={`relative overflow-hidden transition-all hover:shadow-card ${
+                        plan.popular ? "border-2 border-primary shadow-card scale-105 md:scale-100" : "border"
                       }`}
                     >
                       {plan.popular && (
-                        <div className="absolute top-4 right-4">
-                          <Badge className="bg-secondary text-secondary-foreground">Most Popular</Badge>
+                        <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-primary to-secondary py-1.5 px-3">
+                          <p className="text-xs font-semibold text-primary-foreground text-center">
+                            ⭐ MOST POPULAR
+                          </p>
                         </div>
                       )}
-                      <CardContent className="p-6 space-y-4">
+                      <CardContent className={`p-4 md:p-6 space-y-4 ${plan.popular ? "pt-10" : ""}`}>
                         <div>
-                          <h3 className="text-xl font-semibold mb-1">{plan.name}</h3>
+                          <h3 className="text-lg md:text-xl font-semibold mb-1">{plan.name}</h3>
                           <p className="text-sm text-muted-foreground">{plan.duration}</p>
                         </div>
 
                         <div>
-                          <div className="flex items-baseline gap-2">
-                            <span className="text-3xl font-bold text-primary">₹{plan.price}</span>
+                          <div className="flex items-baseline gap-2 flex-wrap">
+                            <span className="text-2xl md:text-3xl font-bold text-primary">₹{plan.price}</span>
                             {plan.originalPrice && (
-                              <span className="text-lg text-muted-foreground line-through">
+                              <span className="text-base md:text-lg text-muted-foreground line-through">
                                 ₹{plan.originalPrice}
                               </span>
                             )}
                           </div>
-                          {plan.originalPrice && (
-                            <p className="text-xs text-secondary font-medium mt-1">
-                              Save ₹{plan.originalPrice - plan.price}
+                          <div className="flex items-center gap-2 mt-1">
+                            <p className="text-xs text-muted-foreground">
+                              ₹{plan.pricePerDay}/day
                             </p>
-                          )}
+                            {plan.originalPrice && (
+                              <Badge variant="secondary" className="text-xs">
+                                Save ₹{plan.originalPrice - plan.price}
+                              </Badge>
+                            )}
+                          </div>
                         </div>
 
-                        <ul className="space-y-2">
+                        <ul className="space-y-2.5">
                           {plan.meals.map((meal, i) => (
                             <li key={i} className="flex items-start gap-2 text-sm">
                               <CheckCircle2 className="h-4 w-4 text-secondary mt-0.5 flex-shrink-0" />
-                              <span>{meal}</span>
+                              <span className="text-foreground/80">{meal}</span>
                             </li>
                           ))}
                         </ul>
 
                         <Button
                           variant={plan.popular ? "hero" : "outline"}
-                          className="w-full"
+                          className="w-full h-11 text-base font-semibold"
+                          size="lg"
                         >
-                          Select Plan
+                          {plan.popular ? "Choose Plan" : "Select Plan"}
                         </Button>
                       </CardContent>
                     </Card>
@@ -272,8 +313,16 @@ const VendorDetail = () => {
             </Tabs>
           </div>
         </section>
+        
+        {/* Mobile Sticky Footer */}
+        <div className="fixed bottom-16 left-0 right-0 p-4 bg-gradient-to-t from-background via-background to-transparent md:hidden z-40">
+          <Button variant="hero" size="lg" className="w-full h-14 text-base font-semibold shadow-elevated">
+            Subscribe Now
+          </Button>
+        </div>
       </main>
-      <Footer />
+      <MobileNav />
+      <Footer className="hidden md:block" />
     </div>
   );
 };

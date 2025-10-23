@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import MobileNav from "@/components/MobileNav";
 import Footer from "@/components/Footer";
 import Hero from "@/components/home/Hero";
 import HowItWorks from "@/components/home/HowItWorks";
@@ -10,7 +11,7 @@ import CTA from "@/components/home/CTA";
 
 const Index = () => {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col pb-20 md:pb-0">
       <Navbar />
       <main className="flex-1">
         <Hero />
@@ -21,7 +22,8 @@ const Index = () => {
         <Testimonials />
         <CTA />
       </main>
-      <Footer />
+      <MobileNav />
+      <Footer className="hidden md:block" />
     </div>
   );
 };
